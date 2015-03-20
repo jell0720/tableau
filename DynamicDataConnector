@@ -1,0 +1,62 @@
+'Create Connection
+Set conn = CreateObject("ADODB.Connection")
+strCnx = "Provider=MSDASQL.1;Password=password;Persist Security Info=True;User ID=postgres;Data Source=PostgreSQL35W;Initial Catalog=postgres"
+conn.Open strCnx
+
+
+Set objFSO1 = CreateObject("Scripting.FileSystemObject")
+set WshShell=Wscript.Createobject("Wscript.shell")
+set oExec = wshshell.exec("curl  http://www.domain.json") 
+allan=""
+With oExec 
+   Do While .Status = 0 
+      WScript.Sleep 10 
+
+
+      Do While Not .StdOut.AtEndOfStream 
+        allan=allan &  .StdOut.ReadLine 
+      Loop
+   Loop 
+End With
+
+'wscript.echo allan
+n1=now()
+tom = split(allan, "],")
+
+for each t1 in tom
+
+
+if instr(t1, """:[""") then
+tom1=split(t1,""":[""")
+record=replace(tom1(0),"""","")
+
+wscript.echo "Record: " & record 
+'wscript.echo chr(10)
+
+tom2 = split(tom1(1), ",")
+ctr=1
+ins=record
+for each t2 in tom2
+
+
+'wscript.echo ctr & ":" &  replace(t2, """", "") 
+ins=ins & "','" & replace(t2, """", "") 
+
+
+'wscript.echo chr(10)
+
+ctr=ctr+1
+next
+'wscript.echo n1
+
+ins2="insert into json (f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20) values ('" & ins & "','" &n1& "')"
+wscript.echo ins2
+Set rs = CreateObject("ADODB.recordset")
+rs.Open ins2, conn
+end if
+
+record=""
+next
+
+
+conn.Close
