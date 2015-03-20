@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="description" content="A haptic feedback enabled visualization">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+input[type="button"]
+{
+    width:110px;
+    height:110px;
+    display:block;
+    background-color:transparent;
+    color:white;
+    border: none;
+    outline:none;
+}
+</style>
+<script>
+function vibrate(duration) {
+        if ('vibrate' in navigator) {
+          navigator.vibrate(duration);
+        } else if ('mozVibrate' in navigator) {
+          navigator.mozVibrate(duration);
+        }
+      }
+</script>
+  </head>
+<body>
+<center><div>
+      <button style="background-color:transparent" onclick="vibrate(1000);">1 second</button>
+    </div></center>
+ </body>
+</html>
