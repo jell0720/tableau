@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS sfpd;
+CREATE TABLE sfpd
+(IncidntNum varchar, Category varchar, Descript varchar, DayOfWeek varchar, Date DATE, Time TIME, PdDistrict varchar, Resolution varchar, Address varchar, X double precision, Y double precision, Location varchar );
+COPY sfpd 
+  FROM PROGRAM 'C:/wget/bin/wget.exe -q -O - "$@" "http://data.sfgov.org/api/views/ritf-b9ki/rows.csv"' DELIMITER ',' CSV HEADER;
